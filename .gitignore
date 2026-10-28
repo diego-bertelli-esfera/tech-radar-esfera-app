@@ -1,0 +1,9 @@
+# Ambiente local e artefatos derivados
+.dist/
+dist/
+.byor-official/
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+.env*

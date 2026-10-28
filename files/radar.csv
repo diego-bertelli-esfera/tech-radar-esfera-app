@@ -1,0 +1,49 @@
+name,ring,quadrant,isNew,description
+Salesforce Sales Cloud,adopt,platforms,FALSE,"CRM comercial central, presente em praticamente todas as etapas do fluxo de valor (captação, qualificação, propostas, negociação, transição operacional)."
+Esfera Hub,caution,platforms,FALSE,"Sistema antigo, ainda crítico para o negócio, mas sem investimento adicional — precisa ser modernizado."
+Esfera ERP,adopt,platforms,FALSE,"Sistema de faturamento e financeiro, integrado ao Hub."
+AWS Backend Lambdas,caution,platforms,FALSE,"A documentação de origem se refere a este backend como legado. Ainda sustentado, mas com objetivo de eliminação."
+Sistemas CCEE,adopt,platforms,FALSE,Integração regulatória obrigatória para operação no mercado livre de energia; não é opcional. “Infomercado” foi removido do nome — era uma planilha da CCEE que não existe mais.
+Salesforce Service Cloud,trial,platforms,FALSE,"Citado no inventário como “Em Implantação”. Vai implementar os canais de atendimento aos clientes, substituindo HiPlatform e Multi360."
+TOTVS/Protheus,trial,platforms,TRUE,Novo ERP corporativo; substituirá o Omie a partir de janeiro (projeto em curso).
+HiPlatform,caution,platforms,FALSE,Usado para atendimento por e-mail ao varejo; está sendo migrado para o Salesforce Service Cloud.
+Omie,caution,platforms,FALSE,ERP atual da Esfera; será substituído pelo TOTVS/Protheus a partir de janeiro (projeto em curso).
+Multi360,caution,platforms,FALSE,Onde é realizado o atendimento do varejo via WhatsApp; está sendo migrado para o Salesforce Service Cloud.
+Zeus,adopt,platforms,FALSE,"Sistema de terceiro, vital para a operação da Esfera — sustenta processos importantes, com destaque para Gestão de Portfólio. Há desejo de substituí-lo por meio da nova arquitetura, mas o caminho ainda não está desenhado."
+Temporal,assess,platforms,FALSE,"Plataforma open-source de execução durável (durable execution) para orquestração de workflows distribuídos resilientes — mantém o estado do processo, com retry, timeout e compensação (saga) transparentes. Em avaliação como motor de orquestração de longa duração; comparar com AWS Step Functions (portabilidade × operação × lock-in) antes de adoção."
+Nextgy – BPO Migrações,adopt,platforms,FALSE,"A Esfera acabou de contratar a Nexgy. Hoje a integração via sistema com eles é fraca, mas precisa evoluir."
+Escore (Motor Legado),caution,platforms,FALSE,Documentado explicitamente como “Motor Legado” no fluxo de Medição — candidato a substituição/descontinuação.
+Snowflake,adopt,platforms,TRUE,Plataforma de dados e analytics. Classificada como ADOPT por solicitação expressa para esta revisão do Tech Radar.
+Bedrock (IA Corp),adopt,platforms,TRUE,Plataforma corporativa de IA. Classificada como ADOPT por solicitação expressa para esta revisão do Tech Radar.
+HubSpot,adopt,tools,FALSE,Captação de leads com integração ativa e documentada (HubSpot → Salesforce).
+Risk3,adopt,tools,FALSE,Análise de crédito integrada ao fluxo core de viabilidade comercial.
+Clicksign,adopt,tools,FALSE,Ferramenta de assinatura eletrônica do inventário corporativo (ver nota de reconciliação abaixo).
+Power BI,adopt,tools,FALSE,Ferramenta de BI corporativa padrão.
+Sendgrid,adopt,tools,FALSE,Comunicação transacional (e-mail) com o cliente.
+WhatsApp,adopt,tools,FALSE,Canal de relacionamento comercial já consolidado (enriquecimento de cliente). Questão aberta pelo Tito: confirmar se esta entrada se refere ao uso do WhatsApp pelos executivos de vendas em celulares corporativos — validar com squad responsável.
+PowerPoint,adopt,tools,FALSE,Ferramenta de produtividade padrão corporativo.
+Metabase,adopt,tools,FALSE,"Uso hoje mais disseminado que o Power BI. Classificado como ADOPT até que o projeto de transformação disponibilize uma alternativa consolidada — quando isso ocorrer, deve migrar para HOLD."
+Pipefy,caution,tools,FALSE,"Era usado no processo de migração, que foi terceirizado para a Nexgy."
+Make,caution,tools,FALSE,"Já gerou descontrole quando usado de forma pulverizada pelos times, sem suporte estruturado de TI. Adoção de ferramenta de automação exige decisão consciente e estruturada, não uso orgânico."
+Ravena,trial,tools,FALSE,Citada na etapa de enriquecimento de cliente. Tito não identificou uso corrente — validar com squad responsável antes da próxima revisão.
+LinkedIn / LinkedIn Sales Navigator,trial,tools,FALSE,"Prospecção comercial, uso pontual."
+Data Loader,trial,tools,FALSE,"Ferramenta técnica de carga de dados, uso pontual/operacional. Tito não reconheceu a ferramenta — validar com squad responsável."
+Bot de Atendimento (WhatsApp Varejista),caution,tools,FALSE,"Estrutura associada ao Multi360, que está migrando para o Salesforce Service Cloud — a funcionalidade será absorvida pelo Service Cloud."
+Lusha,assess,tools,FALSE,Enriquecimento de contatos. Tito não reconheceu a ferramenta — validar com squad responsável.
+Hud,adopt,tools,TRUE,"Portal de clientes. Visão de negócio é ADOPT — importante no discurso de venda; visão de TI tende a HOLD, pois não há mais investimento e o sistema precisa ser transformado. Tensão a resolver na próxima revisão."
+Hud Cotação,caution,tools,TRUE,"Portal que estrutura o processo de compra/venda de energia. Uso importante dentro da Esfera, mas necessita de transformação."
+Hud Inteligência,adopt,tools,TRUE,Usado para controle/supervisão de rodadas de previsão de preço. Classificado como ADOPT até que o projeto de transformação avalie este componente.
+Plugin Esfera,adopt,tools,FALSE,"É a intranet da Esfera. Está migrando do Google para o Microsoft, acompanhando a migração da empresa como um todo."
+Grupo Telegram,caution,tools,FALSE,"Canal usado por diversos automatismos importantes (previsão de preço, captação de dados de mercado, entre outros) — não é um canal puramente informal. Classificado como HOLD porque a Esfera busca migrá-lo para uma estrutura mais moderna e institucional."
+Excel (controles manuais),caution,tools,FALSE,Uso identificado para acompanhamento de negociação/oportunidades — indica processo manual; recomenda-se migração para Salesforce/Hub.
+Climatologia (Modelos Climáticos),adopt,tools,FALSE,"Deve ser tratada como um portal, semelhante ao Hud Inteligência. É madura e amplamente utilizada; precisa de modernização, mas o projeto de transformação ainda não avaliou este componente."
+Processo ETL,caution,techniques,FALSE,"Foi criado para o Hud, mas deve ser transformado."
+Modelos de Otimização Setorial (New Wave / Decomp / Dessem),adopt,techniques,FALSE,"Modelos especializados do setor energético, uso consolidado."
+Camada Corporativa de Integração,trial,techniques,FALSE,Citada como oportunidade identificada e já em desenho na arquitetura de solução (ARQ-001 — Plataforma de Integração).
+Serviços Compartilhados de Gestão de Partes,trial,techniques,FALSE,"Em construção — arquitetura de solução já desenhada (ARQ-001 — Gestão de Partes), ainda não em produção plena."
+Arquitetura Orientada a Eventos,trial,techniques,FALSE,Listada como oportunidade de evolução arquitetural; iniciativas pontuais (ex.: Event Publisher da Gestão de Partes) já em desenho.
+Backend ML / Modelos Preditivos,caution,techniques,FALSE,"Uso de Machine Learning identificado no inventário, maturidade e abrangência ainda em avaliação."
+Script Python Local Descentralizado (bases públicas / Receita),caution,techniques,FALSE,"Prática manual e descentralizada (execução local), risco de shadow IT e falta de rastreabilidade — recomenda-se centralizar via serviços corporativos de integração."
+Python,adopt,languages & frameworks,FALSE,"Linguagem utilizada em scripts de enriquecimento de dados, ETL e iniciativas de Backend ML."
+Angular,adopt,languages & frameworks,TRUE,Framework de frontend em uso nos squads de engenharia.
+NX,adopt,languages & frameworks,TRUE,Ferramenta de gestão de monorepo em uso nos squads de engenharia.

@@ -1,0 +1,24 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install 24
+        - nvm use 24
+        - python3 -m unittest discover -s tests -v
+        - python3 scripts/validate_radar.py files/radar.csv
+        # Fonte oficial versionada: obtida pela AWS no build, sem bootstrap local.
+        - git clone --depth 1 --branch v1.2.0 https://github.com/thoughtworks/build-your-own-radar.git .byor-official
+        - cd .byor-official && npm ci && cd ..
+    build:
+      commands:
+        - cd .byor-official && npm run build:prod && cd ..
+        - test -f .byor-official/dist/index.html
+        - mkdir -p dist/files
+        - cp -R .byor-official/dist/. dist/
+        - cp files/radar.csv dist/files/radar.csv
+        - test -f dist/files/radar.csv
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'

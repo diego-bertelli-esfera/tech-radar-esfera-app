@@ -1,0 +1,56 @@
+name: Sincronizar radar a partir do OneDrive
+on:
+  repository_dispatch:
+    types: [radar_csv_updated]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: radar-synchronization
+  cancel-in-progress: false
+jobs:
+  synchronize:
+    # workflow_dispatch e usado apenas para verificar validacao do arquivo existente.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - name: Importar e validar CSV recebido
+        if: github.event_name == 'repository_dispatch'
+        env:
+          RADAR_CSV_BASE64: ${{ github.event.client_payload.csv_base64 }}
+        run: python3 scripts/import_dispatch.py
+      - name: Validar dados oficiais
+        run: python3 scripts/validate_radar.py files/radar.csv
+      - name: Publicar versao no Git
+        id: commit_data
+        if: github.event_name == 'repository_dispatch'
+        shell: bash
+        run: |
+          git add files/radar.csv
+          if git diff --cached --quiet; then
+            echo "CSV igual ao publicado: nenhum commit necessario"
+            exit 0
+          fi
+          git config user.name "tech-radar-sync[bot]"
+          git config user.email "tech-radar-sync[bot]@users.noreply.github.com"
+          git commit -m "data: sincronizar radar a partir do OneDrive"
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Acionar Amplify por webhook (opcional)
+        if: github.event_name == 'repository_dispatch' && steps.commit_data.outputs.changed == 'true'
+        env:
+          AMPLIFY_WEBHOOK_URL: ${{ secrets.AMPLIFY_WEBHOOK_URL }}
+        shell: bash
+        run: |
+          if [ -n "$AMPLIFY_WEBHOOK_URL" ]; then
+            curl --fail-with-body --silent --show-error --request POST \
+              --header 'Content-Type: application/json' --data '{}' \
+              "$AMPLIFY_WEBHOOK_URL" >/dev/null
+            echo "Webhook Amplify solicitado"
+          else
+            echo "Sem AMPLIFY_WEBHOOK_URL; usando integracao GitHub -> Amplify"
+          fi

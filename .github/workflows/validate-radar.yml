@@ -1,0 +1,14 @@
+name: Validar dados do Tech Radar
+on:
+  pull_request:
+    paths: ['files/radar.csv', 'scripts/validate_radar.py']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checar CSV
+        run: python3 scripts/validate_radar.py files/radar.csv
